@@ -121,7 +121,34 @@ namespace logging {
                 };
 
         };
+
+        /*! \brief output the given data according to output_base_type's policy
+         */
+        template<typename TT, typename M>
+        static inline void output(TT& t, const M& m){
+            static_cast<typename TT::output_base_type&>(t)<<m;
+        }
+
     } /* detail */
+
+    /*! \brief free operator function to dive into the framework
+     */
+    template<typename T>
+    static inline ::logging::loggingReturnType &
+    operator<<( ::logging::loggingReturnType& ret, const T& t) {
+        ::logging::detail::output(ret,t);
+        return ret;
+    }
+
+
+    /*! \brief free operator function overload for disabled parts
+     *         of the framework
+     */
+    template<typename T>
+    static inline ::logging::NullOutput&
+    operator << (::logging::NullOutput& no, T) {
+        return no;
+    }
 
     /*! \brief The struct %log acts as interface to the %logging framework.
      *
@@ -176,37 +203,9 @@ namespace logging {
         }
 
         static inline ::logging::detail::Logger<>::return_type& emit () {
-            return ::logging::detail::Logger<>::logging();
+            return ::logging::detail::Logger<>::logging() << ::logging::Void::level();
         }
     };
-
-    namespace detail {
-        /*! \brief output the given data according to output_base_type's policy
-         */
-        template<typename TT, typename M>
-        static inline void output(TT& t, const M& m){
-            static_cast<typename TT::output_base_type&>(t)<<m;
-        }
-    }
-
-    /*! \brief free operator function to dive into the framework
-     */
-    template<typename T>
-    static inline ::logging::loggingReturnType &
-    operator<<( ::logging::loggingReturnType& ret, const T& t) {
-        ::logging::detail::output(ret,t);
-        return ret;
-    }
-
-
-    /*! \brief free operator function overload for disabled parts
-     *         of the framework
-     */
-    template<typename T>
-    static inline ::logging::NullOutput&
-    operator << (::logging::NullOutput& no, T) {
-        return no;
-    }
 
 } /* logging */
 
