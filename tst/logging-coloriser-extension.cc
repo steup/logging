@@ -71,7 +71,7 @@ struct ConsoleColors {
 
 #define GENERATE_OPERATOR_CONTENT   \
         unsigned char tmp=Base::getBase();  \
-        *this << ::logging::log::dec << "\033[0" << static_cast<unsigned short>(l) << 'm';  \
+        *this << ::logging::log::dec << "\033[" << static_cast<unsigned short>(l) << 'm';  \
         Base::setBase(tmp);
 
 #else
