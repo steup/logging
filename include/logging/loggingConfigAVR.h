@@ -80,12 +80,10 @@ namespace logging {
          */
         typedef ::logging::OutputLevelSwitchDisabled <
                     ::logging::OutputStream <
-                        OutputBaseType <
-                            COutDevice <
-                                SecOut <
-                                    Uartnoint <
-                                        UARTLOGDEVICE<>
-                                    >
+                        COutDevice <
+                            SecOut <
+                                Uartnoint <
+                                    UARTLOGDEVICE<>
                                 >
                             >
                         >
