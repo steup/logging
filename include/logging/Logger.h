@@ -54,7 +54,7 @@
  */
 namespace logging {
 
-    /*! \brief defines the return type of the logging framework that is able to process
+    /*! \brief defines the return type of the %logging framework that is able to process
      *         different type/value by using the typical operator<< behaviour.
      */
     struct loggingReturnType;
@@ -210,11 +210,11 @@ namespace logging {
 } /* logging */
 
 
-/*! \brief The macro generates the correct return type of the logging framework
+/*! \brief The macro generates the correct return type of the %logging framework
  *
  *  \param BASE describes the base type of the return type (loggingReturnType)
  *
- *  This macro is used if someone extend the logging framework with further
+ *  This macro is used if someone extend the %logging framework with further
  *  functionality like customized prefixes or colorization. For an example
  *  and howto read \ref extending
  */

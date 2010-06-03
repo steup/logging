@@ -73,7 +73,7 @@ namespace logging {
      */
     struct Level {
         /*! \brief The enum encapsulates the different %levels of the
-         *         logging system in order to provide a type used for
+         *         %logging system in order to provide a type used for
          *         matching in some operators like operator<<.
          */
         enum levels {
@@ -106,7 +106,7 @@ namespace logging {
      *         the logging::log::emit() function.
      *
      *          Prefixes the output with "[ ERROR ] " and enables reporting
-     *          of the current logging level.
+     *          of the current %logging level.
      */
     struct Error {
         /*! \brief delivers the current %level of %logging */
@@ -123,7 +123,7 @@ namespace logging {
      *         the logging::log::emit() function.
      *
      *         Prefixes the output with "[WARNING] " and enables reporting
-     *         of the current logging level.
+     *         of the current %logging level.
      */
     struct Warning {
         /*! \brief delivers the current %level of %logging */
@@ -140,7 +140,7 @@ namespace logging {
      *         the logging::log::emit() function.
      *
      *         Does not prefix the output, but enables reporting of the
-     *         current logging level, too.
+     *         current %logging level, too.
      */
     struct Void {
         /*! \brief delivers the current %level of %logging */
@@ -149,7 +149,7 @@ namespace logging {
         }
         /*! \brief delivers the string reporting the current %level of %logging */
         static const char * desc() {
-            return "";
+            return 0;
         }
     };
 
@@ -160,7 +160,7 @@ namespace logging {
      *         the logging::log::emit() function.
      *
      *         Prefixes the output with "[ INFO  ] " and enables reporting
-     *         of the current logging level.
+     *         of the current %logging level.
      */
     struct Info {
         /*! \brief delivers the current %level of %logging */
@@ -177,7 +177,7 @@ namespace logging {
      *         the logging::log::emit() function.
      *
      *         Prefixes the output with "[ TRACE ] " and enables reporting
-     *         of the current logging level.
+     *         of the current %logging level.
      */
     struct Trace {
         /*! \brief delivers the current %level of %logging */
@@ -194,7 +194,7 @@ namespace logging {
      *         the logging::log::emit() function.
      *
      *         Prefixes the output with "[ DEBUG ] " and enables reporting
-     *         of the current logging level.
+     *         of the current %logging level.
      */
     struct Debug {
         /*! \brief delivers the current %level of %logging */

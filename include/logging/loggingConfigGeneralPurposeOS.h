@@ -92,7 +92,7 @@ namespace logging {
                 > StdLogRunTimeSwitchType;
     }
 
-    /*!\brief base logging type for the respective platform
+    /*!\brief base %logging type for the respective platform
      */
     typedef ::logging::config::StdLogType LoggingType;
 }

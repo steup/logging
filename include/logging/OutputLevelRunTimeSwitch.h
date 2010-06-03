@@ -44,7 +44,7 @@
 
 namespace logging {
 
-    /*! \brief Treatment of logging levels can be switched at runtime
+    /*! \brief Treatment of %logging levels can be switched at runtime
      */
     template < typename Base >
     class OutputLevelRunTimeSwitch  : public Base {

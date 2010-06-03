@@ -44,8 +44,8 @@
 
 namespace logging {
 
-    /*! \brief The dynamic treatment of logging levels is switched off if this
-     *         class is a base class of the output-type of the logging framework
+    /*! \brief The dynamic treatment of %logging levels is switched off if this
+     *         class is a base class of the output-type of the %logging framework
      */
     template < typename Base >
     class OutputLevelSwitchDisabled : public Base {

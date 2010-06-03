@@ -91,7 +91,7 @@ namespace logging {
                 > UartLogType;
     }
 
-    /*!\brief base logging type for the respective platform
+    /*!\brief base %logging type for the respective platform
      */
     typedef ::logging::config::UartLogType LoggingType;
 }
