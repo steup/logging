@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2008, 2009 Michael Schulze <mschulze@ivs.cs.uni-magdeburg.de>
+ * Copyright (c) 2008-2010 Michael Schulze <mschulze@ivs.cs.uni-magdeburg.de>
  * All rights reserved.
  *
  *    Redistribution and use in source and binary forms, with or without
@@ -45,8 +45,8 @@
 #include "logging/OutputLevelSwitchDisabled.h"
 #include "logging/OutputLevelRunTimeSwitch.h"
 #include "logging/Logger.h"
+#include "logging/ProgramMemoryString.h"
 
-#ifndef LOGGING_DEFINE_OWN_OUTPUT_TYPE
 
 #ifdef LOGGING_DISABLE
 
@@ -61,6 +61,8 @@ LOGGING_DEFINE_OUTPUT( ::logging::NullOutput )
 
 #else
 
+#ifndef LOGGING_DEFINE_OWN_OUTPUT_TYPE
+
 #ifdef __AVR__
 #include "logging/loggingConfigAVR.h"
 #else
@@ -72,8 +74,8 @@ LOGGING_DEFINE_OUTPUT( ::logging::NullOutput )
 LOGGING_DEFINE_OUTPUT( ::logging::LoggingType )
 #endif /* LOGGING_DEFINE_EXTENDED_OUTPUT_TYPE */
 
-#endif /* LOGGING_DISABLE */
-
 #endif /* LOGGING_DEFINE_OWN_OUTPUT_TYPE */
+
+#endif /* LOGGING_DISABLE */
 
 #endif /* __logging_h__ */
