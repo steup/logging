@@ -169,7 +169,7 @@ namespace logging {
              * \return %OutputStream& allows for chaining of operators
              */
             OutputStream& operator << (const unsigned char* string) {
-                return *this << reinterpret_cast<char*>(string);
+                return *this << const_cast<unsigned char*>(string);
             }
 
             /*!\brief displays a short using the set numerative
