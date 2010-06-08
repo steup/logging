@@ -271,7 +271,7 @@ namespace logging {
                         put ('0' + digit);
                     else
                         put ('a' + digit - 10);
-                    ival %= div;
+                    ival -= div*digit;
                 }
                 return *this;
             }
