@@ -137,10 +137,9 @@ namespace logging {
              * \return %OutputStream& allows for chaining of operators
              */
             OutputStream& operator << (char* string) {
-                char* pos = string;
-                while (*pos) {
-                    put (*pos);
-                    pos++;
+                while (*string) {
+                    put (*string);
+                    ++string;
                 }
                 return *this;
             }
