@@ -37,44 +37,58 @@
  *
  ******************************************************************************/
 
-#ifndef __logging_h__
-#define __logging_h__
+#ifndef __ProgramMemoryStringImpl_h__
+#define __ProgramMemoryStringImpl_h__
 
-#include "logging/NullOutput.h"
-#include "logging/OutputStream.h"
-#include "logging/OutputLevelSwitchDisabled.h"
-#include "logging/OutputLevelRunTimeSwitch.h"
-#include "logging/Logger.h"
-
-
-#ifdef LOGGING_DISABLE
-
-/*! \brief define NullOutput as output %device */
-LOGGING_DEFINE_OUTPUT( ::logging::NullOutput )
-
-// undefine the macro and redefine it as empty to switch off all
-// user created output types and ensure that only the NullOutput
-// is used as logging type
-#undef LOGGING_DEFINE_OUTPUT
-#define LOGGING_DEFINE_OUTPUT(NAME)
-
-#else
-
-#ifndef LOGGING_DEFINE_OWN_OUTPUT_TYPE
+#include "logging/ProgramMemoryString.h"
 
 #ifdef __AVR__
-#include "logging/loggingConfigAVR.h"
-#else
-#include "logging/loggingConfigGeneralPurposeOS.h"
-#endif /* __AVR__ */
+
+#include <avr/pgmspace.h>
+#define PROGMEMTYPE char __attribute__((section(".progmem.logging-cpp")))
+
+#else /* !__AVR__ */
+
+#define PROGMEMTYPE char
+
+static inline char pgm_read_byte_far(const char* t) {
+    return *t;
+}
+
+#endif  /* __AVR__ */
 
 
-#ifndef LOGGING_DEFINE_EXTENDED_OUTPUT_TYPE
-LOGGING_DEFINE_OUTPUT( ::logging::LoggingType )
-#endif /* LOGGING_DEFINE_EXTENDED_OUTPUT_TYPE */
+namespace logging {
 
-#endif /* LOGGING_DEFINE_OWN_OUTPUT_TYPE */
+    /*! \brief A ProgramMemoryString implements the interface to a
+     *         string placed in program memory
+     *
+     *         It may be used as a usual char pointer, because it
+     *         provides a pointer-like interface.
+     */
+    struct ProgramMemoryString {
+        char operator[](int index) const {
+            return static_cast<char>(pgm_read_byte_far(str+index));
+        }
 
-#endif /* LOGGING_DISABLE */
+        char operator*() const {
+            return static_cast<char>(pgm_read_byte_far(str));
+        }
 
-#endif /* __logging_h__ */
+        const ProgramMemoryString& operator++() const {
+            ++str;
+            return *this;
+        }
+
+        ProgramMemoryString operator++(int) const {
+            ProgramMemoryString p(*this);
+            ++str;
+            return p;
+        }
+
+        mutable const char *str;
+    };
+}
+
+#endif // __ProgramMemoryStringImpl_h__
+

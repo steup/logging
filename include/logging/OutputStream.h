@@ -41,6 +41,7 @@
 #define __OutputStream_h__
 
 #include "logging/Logger.h"
+#include "logging/ProgramMemoryStringImpl.h"
 
 namespace logging {
 
@@ -128,6 +129,19 @@ namespace logging {
              */
             OutputStream& operator << (const ::logging::log::Manipulator m) {
                 *this << static_cast<char>(m);
+                return *this;
+            }
+
+            /*!\brief outputs a string that resides in program memory
+             *
+             * \param string the character string, that is output
+             * \return %OutputStream& allows for chaining of operators
+             */
+            OutputStream& operator << ( PROGMEMSTRINGTYPE pms) {
+                while ( *pms ) {
+                    put(*pms);
+                    ++pms;
+                }
                 return *this;
             }
 

@@ -37,8 +37,8 @@
  *
  ******************************************************************************/
 
-#ifndef __PROGRAMMEMORYSTRING_h__
-#define __PROGRAMMEMORYSTRING_h__
+#ifndef __ProgramMemoryString_h__
+#define __ProgramMemoryString_h__
 
 /*!
  * \def PROGMEMSTRING
@@ -49,51 +49,26 @@
  *        Especially in the embedded field the RAM is often a constrained
  *        ressource. Enabling the placement of constant strings in e.g. the
  *        FLASH memory allows reducing the needed RAM. For the AVR platform,
- *        the %logging framework supports such a feature by using the
- *        %PROGMEMSTRING macro. This macro places the string constant in the
- *        none volatile memory, creates a temporarly variable that abstracts
- *        the access to the given string, and is used by the %logging
- *        framework. On architecture without the need for such a feature, or on
- *        those not yet supported, the macro substituation results in the
- *        string constant. Thus, the %PROGMEMSTRING macro can be used always.
+ *        the logging framework supports such a feature by using the
+ *        PROGMEMSTRING macro. This macro places the string constant in the non
+ *        volatile memory, creates a temporarily variable that abstracts the
+ *        access to the given string as it would be a pointer to a character
+ *        array. This variable then is used by the logging framework. On
+ *        architecture without the need for such a feature, or on those not yet
+ *        supported, the only changing thing is the placement of the string
+ *        into normal RAM, but the provided abstraction works as well. Thus,
+ *        the PROGMEMSTRING macro can be used always.
  *
  * \param s the string constant
  */
-
-#ifndef __AVR__
-
-#define PROGMEMSTRING(s) s
-
-#else
-
-#include <avr/pgmspace.h>
-namespace logging {
-    struct ProgramMemoryString {
-
-      char operator[](int index) const {
-          return static_cast<char>(pgm_read_byte_far( str + index));
-      }
-
-      const prog_char *str;
-    };
-
-    inline ::logging::loggingReturnType&
-    operator << (logging::loggingReturnType& out, const ProgramMemoryString& pms) {
-        size_t c=0;
-        while ( pms[c] )
-            out << pms[c++];
-        return out;
-    }
-}
-
-#define PROGMEMSTRING(s)                                           \
-    (__extension__({                                               \
-        static prog_char __str[] = (s);                            \
-        ::logging::ProgramMemoryString __pms={&__str[0]};          \
-        __pms;                                                     \
+#define PROGMEMSTRING(s)                                            \
+    (__extension__({                                                \
+        static PROGMEMTYPE __str[] = (s);                           \
+        const ::logging::ProgramMemoryString __pms = {&__str[0]};   \
+        __pms;                                                      \
     }))
 
-#endif
+#define PROGMEMSTRINGTYPE const ::logging::ProgramMemoryString
 
-#endif // __PROGRAMMEMORYSTRING_h__
+#endif // __ProgramMemoryString_h__
 
