@@ -40,6 +40,9 @@
 #ifndef __ProgramMemoryString_h__
 #define __ProgramMemoryString_h__
 
+#define __STRINGIFICATION__(x) #x
+#define __TOSTR__(x) __STRINGIFICATION__(x)
+
 /*!
  * \def PROGMEMSTRING
  * \brief A %PROGMEMSTRING enables the placement of string constants in the
@@ -61,14 +64,23 @@
  *
  * \param s the string constant
  */
-#define PROGMEMSTRING(s)                                            \
-    (__extension__({                                                \
-        static PROGMEMTYPE __str[] = (s);                           \
-        const ::logging::ProgramMemoryString __pms = {&__str[0]};   \
-        __pms;                                                      \
+#define PROGMEMSTRING(S)                                                    \
+    (__extension__({                                                        \
+        static                                                              \
+           char __attribute__  ((                                           \
+                            section(                                        \
+                                __TOSTR__(                                  \
+                                    __TOSTR__(.progmem.logging-cpp.S)       \
+                                )                                           \
+                            )                                               \
+                        ))  __str[] = (S);                                  \
+        const ::logging::ProgramMemoryString __pms = {&__str[0]};           \
+        __pms;                                                              \
     }))
 
 #define PROGMEMSTRINGTYPE const ::logging::ProgramMemoryString
+
+#include "logging/ProgramMemoryStringImpl.h"
 
 #endif // __ProgramMemoryString_h__
 

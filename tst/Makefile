@@ -41,6 +41,8 @@ CXXFLAGS=-I../include -Wall -Os
 
 filtered=$(filter-out %.cc %.h %.py %.impl %Makefile,$(shell find . -maxdepth 1 -type f))
 
+LDFLAGS=-Wl,--gc-sections
+
 .phony: all clean
 
 all:

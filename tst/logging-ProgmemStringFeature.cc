@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2008-2010 Michael Schulze <mschulze@ivs.cs.uni-magdeburg.de>
+ * Copyright (c) 2008, 2009 Michael Schulze <mschulze@ivs.cs.uni-magdeburg.de>
  * All rights reserved.
  *
  *    Redistribution and use in source and binary forms, with or without
@@ -37,56 +37,34 @@
  *
  ******************************************************************************/
 
-#ifndef __ProgramMemoryStringImpl_h__
-#define __ProgramMemoryStringImpl_h__
+// for at90can128 with 16MHz CPU clock
+#define CPU_FREQUENCY 16000000
 
-#ifdef __AVR__
+//#define LOGGING_DISABLE
+#include "logging/logging.h"
+using namespace ::logging;
 
-#include <avr/pgmspace.h>
+// logging levels can be disabled at compile time
+//LOGGING_DISABLE_LEVEL(::logging::Error);
 
-#else /* !__AVR__ */
 
-#undef PROGMEMSTRING
-#define PROGMEMSTRING(S) S
+struct Test {
+    Test() {
+        ::logging::log::emit< ::logging::Info>() << PROGMEMSTRING("Test::Test()")
+            << ::logging::log::endl;
+    }
+    ~Test() {
+        ::logging::log::emit< ::logging::Info>() << PROGMEMSTRING("~Test::Test()")
+            << ::logging::log::endl;
+    }
+};
 
-static inline char pgm_read_byte_far(const char* t) {
-    return *t;
+int main(int, char**) {
+    ::logging::log::emit() << "Hello World! with the logging framework"
+        << ::logging::log::endl << ::logging::log::endl;
+
+    ::logging::log::emit< ::logging::Error>()
+        << PROGMEMSTRING("Logging an Error")
+        << ::logging::log::endl;
+    return 0;
 }
-
-#endif  /* __AVR__ */
-
-
-namespace logging {
-
-    /*! \brief A ProgramMemoryString implements the interface to a
-     *         string placed in program memory
-     *
-     *         It may be used as a usual char pointer, because it
-     *         provides a pointer-like interface.
-     */
-    struct ProgramMemoryString {
-        char operator[](int index) const {
-            return static_cast<char>(pgm_read_byte_far(str+index));
-        }
-
-        char operator*() const {
-            return static_cast<char>(pgm_read_byte_far(str));
-        }
-
-        const ProgramMemoryString& operator++() const {
-            ++str;
-            return *this;
-        }
-
-        ProgramMemoryString operator++(int) const {
-            ProgramMemoryString p(*this);
-            ++str;
-            return p;
-        }
-
-        mutable const char *str;
-    };
-}
-
-#endif // __ProgramMemoryStringImpl_h__
-

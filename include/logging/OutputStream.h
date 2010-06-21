@@ -41,7 +41,7 @@
 #define __OutputStream_h__
 
 #include "logging/Logger.h"
-#include "logging/ProgramMemoryStringImpl.h"
+#include "logging/ProgramMemoryString.h"
 
 namespace logging {
 
@@ -137,7 +137,7 @@ namespace logging {
              * \param string the character string, that is output
              * \return %OutputStream& allows for chaining of operators
              */
-            OutputStream& operator << ( PROGMEMSTRINGTYPE pms) {
+            OutputStream& operator << ( PROGMEMSTRINGTYPE& pms) {
                 while ( *pms ) {
                     put(*pms);
                     ++pms;
