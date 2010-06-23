@@ -289,7 +289,7 @@ namespace logging {
                 return *this;
             }
 
-            /*!\brief displays pointer as hexadezimal digit
+            /*!\brief displays a pointer as hexadezimal digit
              *
              * \param ptr the pointer, that is output
              * \return %OutputStream& allows for chaining of operators
@@ -300,6 +300,15 @@ namespace logging {
                 *this << (unsigned long) ptr;
                 base = oldbase;
                 return *this;
+            }
+
+            /*!\brief displays a constant pointer as hexadezimal digit
+             *
+             * \param ptr the pointer, that is output
+             * \return %OutputStream& allows for chaining of operators
+             */
+            OutputStream& operator << (const void* ptr) {
+                return *this << const_cast<void *>(ptr);
             }
 
             /*! \brief The operator matches on every type, and provides an
