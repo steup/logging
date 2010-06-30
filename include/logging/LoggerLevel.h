@@ -40,6 +40,8 @@
 #ifndef __LoggerLevel_h__
 #define __LoggerLevel_h__
 
+#include "logging/ProgramMemoryString.h"
+
 /*! \brief The macro genrate %logging levels
  *
  *  \param LEVELNAME is the typename of the generated level.
@@ -62,8 +64,8 @@ struct LEVELNAME {                                                            \
         return LEVEL;                                                         \
     }                                                                         \
     /*! \brief delivers the string reporting the current %level of %logging */\
-    static const char * desc() {                                              \
-        return DESC;                                                          \
+    static PROGMEMSTRINGTYPE desc() {                                         \
+        return PROGMEMSTRING(DESC);                                           \
     }                                                                         \
 }
 
@@ -114,8 +116,8 @@ namespace logging {
             return ::logging::Level::error;
         }
         /*! \brief delivers the string reporting the current %level of %logging */
-        static const char * desc() {
-            return "[ ERROR ] ";
+        static PROGMEMSTRINGTYPE desc() {
+            return PROGMEMSTRING("[ ERROR ] ");
         }
     };
 
@@ -131,8 +133,8 @@ namespace logging {
             return ::logging::Level::warning;
         }
         /*! \brief delivers the string reporting the current %level of %logging */
-        static const char * desc() {
-            return "[Warning] ";
+        static PROGMEMSTRINGTYPE desc() {
+            return PROGMEMSTRING("[Warning] ");
         }
     };
 
@@ -148,7 +150,7 @@ namespace logging {
             return ::logging::Level::normal;
         }
         /*! \brief delivers the string reporting the current %level of %logging */
-        static const char * desc() {
+        static const char* desc() {
             return 0;
         }
     };
@@ -168,8 +170,8 @@ namespace logging {
             return ::logging::Level::info;
         }
         /*! \brief delivers the string reporting the current %level of %logging */
-        static const char * desc() {
-            return "[ INFO  ] ";
+        static PROGMEMSTRINGTYPE desc() {
+            return PROGMEMSTRING("[ INFO  ] ");
         }
     };
 
@@ -185,8 +187,8 @@ namespace logging {
             return ::logging::Level::trace;
         }
         /*! \brief delivers the string reporting the current %level of %logging */
-        static const char * desc() {
-            return "[ TRACE ] ";
+        static PROGMEMSTRINGTYPE desc() {
+            return PROGMEMSTRING("[ TRACE ] ");
         }
     };
 
@@ -202,8 +204,8 @@ namespace logging {
             return ::logging::Level::debug;
         }
         /*! \brief delivers the string reporting the current %level of %logging */
-        static const char * desc() {
-            return "[ DEBUG ] ";
+        static PROGMEMSTRINGTYPE desc() {
+            return PROGMEMSTRING("[ DEBUG ] ");
         }
     };
 

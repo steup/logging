@@ -46,9 +46,6 @@
 
 #else /* !__AVR__ */
 
-#undef PROGMEMSTRING
-#define PROGMEMSTRING(S) S
-
 static inline char pgm_read_byte_far(const char* t) {
     return *t;
 }
