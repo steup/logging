@@ -104,6 +104,19 @@ namespace logging {
         }
     };
 
+    /*! \brief Defines the type for setting %logging %levels at runtime
+     */
+    struct RunTimeLevel : Level {};
+
+    /*! \brief Supporting function for setting the %logging %level at runtime
+     */
+    template<typename T>
+    RunTimeLevel setLoggingLevel(T level) {
+        RunTimeLevel rtl;
+        rtl.l=level;
+        return rtl;
+    }
+
     /*! \brief This class is intended to be used as a template argument for
      *         the logging::log::emit() function.
      *

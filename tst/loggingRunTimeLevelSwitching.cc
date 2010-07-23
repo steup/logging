@@ -37,60 +37,39 @@
  *
  ******************************************************************************/
 
-#ifndef __OutputLevelRunTimeSwitch_h__
-#define __OutputLevelRunTimeSwitch_h__
+#define LOGGING_DEFINE_EXTENDED_OUTPUT_TYPE
 
-#include "logging/LoggerLevel.h"
+#include "logging/logging.h"
+LOGGING_DEFINE_OUTPUT( ::logging::config::StdLogRunTimeSwitchType )
 
-namespace logging {
+int main(int, char**) {
+    ::logging::log::emit() << "Hello World! with the logging framework"
+        << ::logging::log::endl << ::logging::log::endl;
 
-    /*! \brief Treatment of %logging levels can be switched at runtime
-     */
-    template < typename Base >
-    class OutputLevelRunTimeSwitch  : public Base {
-            ::logging::Level _level;
-            ::logging::Level _current;
-        public:
-            OutputLevelRunTimeSwitch() {
-                _level.l = ::logging::Level::normal | ::logging::Level::error;
-                _current.l = ::logging::Level::normal;
-            }
+    // Disable Output at all. nothing is outputed until logging
+    // output is enabled again
+    ::logging::log::emit()
+        << ::logging::setLoggingLevel(::logging::Level::disable);
+    ::logging::log::emit() << "Print 15 in hexadecimal "
+        << ::logging::log::hex << 15 << ::logging::log::endl;
+    ::logging::log::emit() << "Print 15 in decimal "
+        << ::logging::log::dec << 15 << ::logging::log::endl;
+    ::logging::log::emit() << "Print 15 in octal "
+        << ::logging::log::oct << 15 << ::logging::log::endl;
+    ::logging::log::emit() << "Print 15 in binary with a tab"
+        << ::logging::log::bin << ::logging::log::tab << 15
+        << ::logging::log::endl << ::logging::log::endl;
 
-            /*! \brief Output is only allowed if the current %level is switched
-             *         on in the general %level.
-             */
-            bool allowed() {
-                return !!(_level&_current);
-            }
-
-            /*! \brief Matches only on correct type and set the
-             *         current %level for the output.
-             */
-            OutputLevelRunTimeSwitch& operator<<(const ::logging::Level::levels& l) {
-                _level = l;
-                return *this;
-            }
-
-            /*! \brief Matches only on correct type and set the
-             *         %levels that are allowed for output.
-             */
-            OutputLevelRunTimeSwitch& operator<<(const ::logging::RunTimeLevel& l) {
-                _current = l;
-                return *this;
-            }
-
-            /*! \brief The operator matches on every type, and delegates further
-             *         work to the base class if the output is currently
-             *         allowed.
-             */
-            template< typename T>
-            OutputLevelRunTimeSwitch& operator<<(T t) {
-                if ( allowed() )
-                    Base::operator<<(t);
-                return *this;
-            }
-    };
-
-} /* logging */
-
-#endif
+    // Enable Output for error and info, only
+    ::logging::log::emit()
+        << ::logging::setLoggingLevel(::logging::Level::error | ::logging::Level::warning);
+    ::logging::log::emit< ::logging::Error>() << "Logging an Error"
+        << ::logging::log::endl;
+    ::logging::log::emit< ::logging::Trace>() << "Logging a Trace"
+        << ::logging::log::endl;
+    ::logging::log::emit< ::logging::Warning>() << "Logging a Warning"
+        << ::logging::log::endl;
+    ::logging::log::emit< ::logging::Info>() << "Logging an Info"
+        << ::logging::log::endl;
+    return 0;
+}

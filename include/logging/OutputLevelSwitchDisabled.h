@@ -59,6 +59,15 @@ namespace logging {
                 return *this;
             }
 
+            /*! \brief Matches only on correct type and used for switching
+             *         %levels. However, here the implementation is empty
+             *         due to the fact, that level switching is disabled
+             *         by this class
+             */
+            OutputLevelSwitchDisabled& operator<<(const ::logging::RunTimeLevel& l) {
+                return *this;
+            }
+
             /*! \brief The operator matches on every type, and delegates further
              *         work to the base class.
              */
