@@ -64,6 +64,8 @@
  *
  * \param s the string constant
  */
+#ifndef WIN32
+
 #define PROGMEMSTRING(S)                                                    \
     (__extension__({                                                        \
         static                                                              \
@@ -77,6 +79,17 @@
         const ::logging::ProgramMemoryString __pms = {&__str[0]};           \
         __pms;                                                              \
     }))
+
+#else
+
+#define PROGMEMSTRING(S)                                                    \
+    (__extension__({                                                        \
+        static char  __str[] = (S);                                         \
+        const ::logging::ProgramMemoryString __pms = {&__str[0]};           \
+        __pms;                                                              \
+    }))
+
+#endif
 
 #define PROGMEMSTRINGTYPE const ::logging::ProgramMemoryString
 
