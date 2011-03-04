@@ -45,3 +45,7 @@ all:
 clean:
 	@make -C tst clean
 	@rm -rf doc
+
+install:
+	install -d $(DESTDIR)/usr/include
+	cp -a include/* $(DESTDIR)/usr/include
