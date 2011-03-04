@@ -1,0 +1,5 @@
+logging-cpp (0-svn19) unstable; urgency=low
+
+  * Initial debianization
+
+ -- Georg Lukas <georg@op-co.de>  Wed, 02 Mar 2011 17:20:10 +0100

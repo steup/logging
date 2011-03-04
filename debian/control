@@ -1,0 +1,18 @@
+Source: logging-cpp
+Priority: extra
+Maintainer: Georg Lukas <georg@op-co.de>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.1
+Section: libs
+Homepage: http://sourceforge.net/projects/logging-cpp/
+#Vcs-Git: git://git.debian.org/collab-maint/logging-cpp.git
+Vcs-Browser: http://logging-cpp.svn.sourceforge.net/
+
+Package: logging-cpp-dev
+Section: libdevel
+Architecture: all
+Description: Configurable Logging Framework In C++
+ The Logging Framework supports stream-like usability, extensibility,
+ portability, type-safety, allows enabling/disabling certain parts or fully at
+ compile time and dependent on the configuration also at runtime and avoids
+ macro-related pitfalls.
